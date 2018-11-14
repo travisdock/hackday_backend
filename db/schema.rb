@@ -10,23 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_152744) do
+ActiveRecord::Schema.define(version: 2018_11_14_163104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "admin_courses", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.bigint "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_admin_courses_on_admin_id"
+    t.index ["course_id"], name: "index_admin_courses_on_course_id"
+  end
+
   create_table "admins", force: :cascade do |t|
     t.string "name"
-    t.string "password"
+    t.string "password_digest"
   end
 
   create_table "assets", force: :cascade do |t|
-    t.string "name"
+    t.string "title"
     t.string "description"
     t.string "link"
     t.boolean "accepted", default: false
     t.boolean "deleted", default: false
-    t.integer "votes"
+    t.integer "votes", default: 0
+    t.integer "course_id"
   end
 
   create_table "courses", force: :cascade do |t|
